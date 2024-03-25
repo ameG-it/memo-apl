@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 interface IUser {
+  _id: string;
   username: string;
   password: string;
   passwordIv: string;
