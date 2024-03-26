@@ -5,6 +5,7 @@ declare module "process" {
     namespace NodeJS {
       interface ProcessEnv {
         MONGODB_URL: string;
+        TOKEN_SECRET_KEY: string;
       }
     }
   }
