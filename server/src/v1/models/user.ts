@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 interface IUser {
+  _id: string;
   username: string;
   password: string;
   passwordIv: string;
@@ -24,4 +25,6 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-export { userSchema, IUser };
+const User = mongoose.model<IUser>("User", userSchema);
+
+export { userSchema, User, IUser };
