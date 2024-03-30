@@ -1,16 +1,14 @@
-import "dotenv/config";
-import crypto = require("crypto");
+import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
+import * as crypto from "crypto";
 import { Buffer } from "node:buffer";
 
-// AES アルゴリズム
-const CRYPT_ALGO: string = process.env.CRYPT_ALGO;
+// AES アルゴリズム 事前に共有すべきパスワード 事前に共有すべきSALT
+const { CRYPT_ALGO, CRYPT_PASSWORD, CRYPT_SALT } = process.env;
 
-// 事前に共有すべきパスワード
-const CRYPT_PASSWORD: string = process.env.CRYPT_PASSWORD;
+// 事前に共有すべきパスワードの生成
 // console.log(crypto.randomBytes(32).toString('base64'))
 
-// 事前に共有すべき SALT
-const CRYPT_SALT: string = process.env.CRYPT_SALT;
+// 事前に共有すべきSALTの生成
 // console.log(crypto.randomBytes(16).toString('base64'))
 
 export const encrypt = (data: string) => {
@@ -27,8 +25,8 @@ export const encrypt = (data: string) => {
   let bufEncryptedData: Buffer = cipher.update(data);
   bufEncryptedData = Buffer.concat([bufEncryptedData, cipher.final()]);
 
-  let iv: string = bufIv.toString("base64");
-  let encryptedData: string = bufEncryptedData.toString("base64");
+  const iv = bufIv.toString("base64");
+  const encryptedData = bufEncryptedData.toString("base64");
   return { iv, encryptedData };
 };
 

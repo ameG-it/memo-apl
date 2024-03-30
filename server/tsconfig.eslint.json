@@ -1,0 +1,12 @@
+{
+  //teconfig.jsonの内容を継承する
+  "extends": "./tsconfig.json",
+  //esLintの設定ファイル自体もチェック対象に含めるための記述
+  "compilerOptions": {
+    "allowJs": true
+  },
+
+  //インクルードの結果はコマンドで確認可能
+  //npx tsc --showConfig --project tsconfig.eslint.json
+  "include": ["src", ".*.ts", "*.ts"]
+}

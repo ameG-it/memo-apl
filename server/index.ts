@@ -1,18 +1,19 @@
-import express = require("express");
+import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
+import express from "express";
 import mongoose from "mongoose";
-import "dotenv/config";
+import userRouter from "./src/v1/routes/auth";
 
-//ユーザのモデルを作成
+// ユーザのモデルを作成
 
-const MONGODB_URL: string = process.env.MONGODB_URL;
+const { MONGODB_URL } = process.env;
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
-app.use("/api/v1", require("./src/v1/routes/auth.ts"));
+app.use("/api/v1", userRouter);
 
-const dbConnect = async () => {
+const dbConnect = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGODB_URL);
   } catch (error) {
