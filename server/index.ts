@@ -1,5 +1,5 @@
 import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
-import express from "express";
+import * as express from "express";
 import mongoose from "mongoose";
 import userRouter from "./src/v1/routes/auth";
 
@@ -13,18 +13,18 @@ app.use(express.json());
 
 app.use("/api/v1", userRouter);
 
-const dbConnect = async (): Promise<void> => {
-  try {
-    await mongoose.connect(MONGODB_URL);
-  } catch (error) {
-    console.log(error);
-  }
-};
-dbConnect();
+try {
+  await mongoose.connect(MONGODB_URL);
+} catch (error) {
+  // デバック用
+  console.log(error); // eslint-disable-line import/no-extraneous-dependencies
+}
+
 app.get("/", (req, res) => {
   res.send("hello world!");
 });
 
 app.listen(PORT, () => {
-  console.log("サーバ起動");
+  // デバック用
+  console.log("サーバ起動"); // eslint-disable-line import/no-extraneous-dependencies
 });
