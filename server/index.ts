@@ -1,5 +1,5 @@
 import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
-import * as express from "express";
+import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./src/v1/routes/auth";
 

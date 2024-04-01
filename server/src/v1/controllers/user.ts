@@ -1,3 +1,4 @@
+import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
 import { Response } from "express";
 import JWT from "jsonwebtoken";
 import { decrypt, encrypt } from "../common/crypter";
@@ -16,7 +17,8 @@ export const register = async (
     req.body.passwordIv = iv;
     // ユーザの作成
     const user = await User.create(req.body);
-    const token = JWT.sign({ id: user._id }, "secretley", {
+    console.log(user);
+    const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "24h",
     });
     res.status(200).json({ user, token });
@@ -47,7 +49,7 @@ export const login = async (req: UserRequest, res: Response): Promise<void> => {
         },
       });
     }
-    const token = JWT.sign({ id: user._id }, "secretley", {
+    const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "24h",
     });
     res.status(201).json({ user, token });
