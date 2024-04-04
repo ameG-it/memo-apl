@@ -4,11 +4,41 @@ import React from "react";
 import { LoadingButton } from "@mui/lab";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import authApi from "../api/authApi";
 
 const Register = () => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // 入力の文字列を取得
+    const data = new FormData(e.currentTarget);
+    const username = data.get("username") as string;
+    const password = data.get("password") as string;
+    const confirmPassword = data.get("confirm-password") as string;
+
+    //新規登録APIを呼び出す
+
+    try {
+      if (password !== confirmPassword) {
+        throw new Error("パスワードが一致しません");
+      } else {
+        if (username && password && confirmPassword) {
+          const res = await authApi.register({
+            username: username,
+            password: password,
+            confirmPassword: confirmPassword,
+          });
+          localStorage.setItem("token", res.data.token);
+          console.log("API通信成功", res.data.token);
+        }
+      }
+    } catch (error) {
+      console.log("API通信失敗", error);
+    }
+  };
+
   return (
     <>
-      <Box>
+      <Box component="form" onSubmit={handleSubmit}>
         <TextField
           fullWidth
           id="username"
