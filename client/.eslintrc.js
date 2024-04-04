@@ -11,6 +11,10 @@ module.exports = {
   // 公式以外が作成したールールをプラグインとして読み込むことができる。TypeScript独自のルールを追加
   plugins: ["@typescript-eslint"],
 
+  extends: [
+    // TypeScriptの推奨ルールを適用
+    "plugin:@typescript-eslint/recommended",
+  ],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -19,5 +23,5 @@ module.exports = {
   },
 
   // コンパイル結果はチェック対象から除外
-  ignorePatterns: ["node_modules"],
+  ignorePatterns: ["node_modules", ".eslintrc.js"],
 };

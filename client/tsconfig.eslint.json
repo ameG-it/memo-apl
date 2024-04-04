@@ -8,5 +8,5 @@
 
   //インクルードの結果はコマンドで確認可能
   //npx tsc --showConfig --project tsconfig.eslint.json
-  "include": ["src", ".*.ts", "*.tsx"]
+  "include": [".eslintrc.js", "src", ".*.ts", "*.tsx"]
 }
