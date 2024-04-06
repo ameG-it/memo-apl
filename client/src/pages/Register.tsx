@@ -5,6 +5,8 @@ import { LoadingButton } from "@mui/lab";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import authApi from "../api/authApi";
+import { AxiosError } from "axios";
+import { AxiosErrResponse } from "../api/types";
 
 const Register = () => {
   const [usernameErrText, setUsernameErrText] = useState("");
@@ -37,26 +39,42 @@ const Register = () => {
       isError = true;
     }
 
+    if (password !== confirmPassword) {
+      setPasswordErrText("パスワードが一致しません");
+      setconfirmPasswordErrText("パスワードが一致しません");
+      isError = true;
+    }
+
     if (isError) {
       return;
     }
     //新規登録APIを呼び出す
     try {
-      if (password !== confirmPassword) {
-        throw new Error("パスワードが一致しません");
-      } else {
-        if (username && password && confirmPassword) {
-          const res = await authApi.register({
-            username: username,
-            password: password,
-            confirmPassword: confirmPassword,
-          });
-          localStorage.setItem("token", res.data.token);
-          console.log("API通信成功", res.data.token);
-        }
-      }
+      const res = await authApi.register({
+        username: username,
+        password: password,
+        confirmPassword: confirmPassword,
+      });
+      localStorage.setItem("token", res.data.token);
+      console.log("API通信成功", res.data.token);
     } catch (error) {
-      console.log("API通信失敗", error);
+      if (error instanceof AxiosError) {
+        console.log("API通信失敗", error.response?.data);
+
+        const errorResponse = error.response?.data as AxiosErrResponse;
+
+        errorResponse.erroes.forEach((e) => {
+          if (e.path === "username") {
+            setUsernameErrText(e.msg);
+          } else if (e.path === "password") {
+            setPasswordErrText(e.msg);
+          } else if (e.path === "confirmPassword") {
+            setconfirmPasswordErrText(e.msg);
+          }
+        });
+      } else {
+        console.log("不明型", error);
+      }
     }
   };
 

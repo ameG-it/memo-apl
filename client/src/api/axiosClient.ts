@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 const BASE_URL = "http://localhost:3001/api/v1";
 
@@ -26,8 +26,8 @@ axiosClient.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
-    throw error.response;
+  (error: AxiosError) => {
+    throw error;
   }
 );
 
