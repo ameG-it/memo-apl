@@ -1,14 +1,18 @@
 import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
 import express from "express";
+import cors from "cors"; // eslint-disable-line import/no-extraneous-dependencies
 import mongoose from "mongoose";
 import userRouter from "./src/v1/routes/auth";
 
 // ユーザのモデルを作成
 
-const { MONGODB_URL } = process.env;
+const { MONGODB_URL, CLIENT_ORIGIN, PORT } = process.env;
 const app = express();
-const PORT = 3000;
 
+// クライアントのオリジンを許可
+app.use(cors({ origin: CLIENT_ORIGIN })); // eslint-disable-line import/no-extraneous-dependencies
+
+// その他のルートとミドルウェアの設定
 app.use(express.json());
 
 app.use("/api/v1", userRouter);
