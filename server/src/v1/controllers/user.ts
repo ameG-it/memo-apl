@@ -34,8 +34,8 @@ export const login = async (req: UserRequest, res: Response): Promise<void> => {
       res.status(401).json({
         errors: [
           {
-            param: "username",
-            message: "ユーザ名もしくはパスワードが違います。",
+            path: "username",
+            msg: "ユーザ名もしくはパスワードが違います。",
           },
         ],
       });
@@ -47,8 +47,8 @@ export const login = async (req: UserRequest, res: Response): Promise<void> => {
       res.status(401).json({
         errors: [
           {
-            param: "password",
-            message: "ユーザ名もしくはパスワードが違います。",
+            path: "password",
+            msg: "ユーザ名もしくはパスワードが違います。",
           },
         ],
       });
