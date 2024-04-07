@@ -3,12 +3,16 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import authApi from "../api/authApi";
 import { AxiosError } from "axios";
 import { AxiosErrResponse } from "../api/types";
 
 const Register = () => {
+  //ページ遷移用の関数
+  const navigate = useNavigate();
+
+  //状態を管理するためのstate
   const [loading, setLoading] = useState(false);
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
@@ -60,6 +64,7 @@ const Register = () => {
       });
       localStorage.setItem("token", res.data.token);
       console.log("API通信成功", res.data.token);
+      navigate("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log("API通信失敗", error.response?.data);
