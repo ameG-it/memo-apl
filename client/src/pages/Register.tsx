@@ -9,11 +9,13 @@ import { AxiosError } from "axios";
 import { AxiosErrResponse } from "../api/types";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
   const [confirmPasswordErrText, setconfirmPasswordErrText] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
     // 入力の文字列を取得
     const data = new FormData(e.currentTarget);
@@ -46,6 +48,7 @@ const Register = () => {
     }
 
     if (isError) {
+      setLoading(false);
       return;
     }
     //新規登録APIを呼び出す
@@ -75,6 +78,8 @@ const Register = () => {
       } else {
         console.log("不明型", error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -117,7 +122,7 @@ const Register = () => {
           sx={{ mt: 3, mb: 2 }}
           fullWidth
           type="submit"
-          loading={false}
+          loading={loading}
           color="primary"
           variant="outlined"
         >
