@@ -1,13 +1,20 @@
 import axiosClient from "./axiosClient";
 
-export interface AuthApiParams {
+export interface AuthApiRegisterParams {
   username: string;
   password: string;
   confirmPassword: string;
 }
 
+export interface AuthApiLoginParams {
+  username: string;
+  password: string;
+}
+
 const authApi = {
-  register: (params: AuthApiParams) => axiosClient.post("/register", params),
+  register: (params: AuthApiRegisterParams) =>
+    axiosClient.post("/register", params),
+  login: (params: AuthApiLoginParams) => axiosClient.post("/login", params),
 };
 
 export default authApi;

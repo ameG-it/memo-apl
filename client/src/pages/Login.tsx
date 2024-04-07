@@ -44,21 +44,18 @@ const Login = () => {
     }
     //新規登録APIを呼び出す
     try {
-      //   // const res = await authApi.register({
-      //   //     username: username,
-      //   //     password: password,
-      //   //     confirmPassword: confirmPassword,
-      //   // });
-      //   localStorage.setItem("token", res.data.token);
-      //   console.log("API通信成功", res.data.token);
+      const res = await authApi.login({
+        username: username,
+        password: password,
+      });
+      localStorage.setItem("token", res.data.token);
+      console.log("API通信成功", res.data.token);
       navigate("/");
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log("API通信失敗", error.response?.data);
-
         const errorResponse = error.response?.data as AxiosErrResponse;
-
-        errorResponse.erroes.forEach((e) => {
+        errorResponse.errors.forEach((e) => {
           if (e.path === "username") {
             setUsernameErrText(e.msg);
           } else if (e.path === "password") {

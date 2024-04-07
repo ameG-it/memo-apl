@@ -71,7 +71,7 @@ const Register = () => {
 
         const errorResponse = error.response?.data as AxiosErrResponse;
 
-        errorResponse.erroes.forEach((e) => {
+        errorResponse.errors.forEach((e) => {
           if (e.path === "username") {
             setUsernameErrText(e.msg);
           } else if (e.path === "password") {

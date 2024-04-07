@@ -17,7 +17,6 @@ export const register = async (
     req.body.passwordIv = iv;
     // ユーザの作成
     const user = await User.create(req.body);
-    console.log(user);
     const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "24h",
     });
@@ -33,21 +32,27 @@ export const login = async (req: UserRequest, res: Response): Promise<void> => {
     const user: IUser = await User.findOne({ username });
     if (!user) {
       res.status(401).json({
-        errors: {
-          param: "username",
-          message: "ユーザ名もしくはパスワードが違います。",
-        },
+        errors: [
+          {
+            param: "username",
+            message: "ユーザ名もしくはパスワードが違います。",
+          },
+        ],
       });
+      return;
     }
 
     const decryptPassword = decrypt(user.passwordIv, user.password);
     if (password !== decryptPassword) {
       res.status(401).json({
-        errors: {
-          param: "password",
-          message: "ユーザ名もしくはパスワードが違います。",
-        },
+        errors: [
+          {
+            param: "password",
+            message: "ユーザ名もしくはパスワードが違います。",
+          },
+        ],
       });
+      return;
     }
     const token = JWT.sign({ id: user._id }, process.env.TOKEN_SECRET_KEY, {
       expiresIn: "24h",

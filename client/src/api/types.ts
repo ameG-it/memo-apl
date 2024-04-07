@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-type erroes = {
+type errors = {
   location: string;
   msg: string;
   path: string;
@@ -8,5 +8,5 @@ type erroes = {
 };
 
 export interface AxiosErrResponse extends AxiosResponse {
-  erroes: erroes[];
+  errors: errors[];
 }
