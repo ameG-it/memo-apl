@@ -95,6 +95,7 @@ const Register = () => {
           required
           helperText={usernameErrText}
           error={!!usernameErrText}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -106,6 +107,7 @@ const Register = () => {
           required
           helperText={passwordErrText}
           error={!!passwordErrText}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -117,6 +119,7 @@ const Register = () => {
           required
           helperText={confirmPasswordErrText}
           error={!!confirmPasswordErrText}
+          disabled={loading}
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
