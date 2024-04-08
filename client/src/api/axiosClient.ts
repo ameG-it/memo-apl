@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { AxiosUserResponse } from "./types";
 
 const BASE_URL = "http://localhost:3001/api/v1";
 
@@ -13,7 +14,7 @@ axiosClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },
@@ -24,7 +25,7 @@ axiosClient.interceptors.request.use(
 
 axiosClient.interceptors.response.use(
   (response) => {
-    return response;
+    return response as AxiosUserResponse;
   },
   (error: AxiosError) => {
     throw error;
