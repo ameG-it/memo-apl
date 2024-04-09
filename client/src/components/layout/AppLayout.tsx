@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Container, Box } from "@mui/system";
-import logoimg from "../../assets/images/logo.png";
+import { Box } from "@mui/system";
 import authUtils from "../../utils/authUtils";
 import Sidebar from "../common/Sidebar";
 
