@@ -6,6 +6,8 @@ import Authlayout from "./components/layout/Authlayout";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { blue } from "@mui/material/colors";
+import AppLayout from "./components/layout/AppLayout";
+import Home from "./pages/Home";
 
 function App() {
   const theme = createTheme({
@@ -22,6 +24,10 @@ function App() {
           <Route path="/" element={<Authlayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+          </Route>
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Home />} />
+            <Route path="memo" element={<Home />} />
           </Route>
         </Routes>
       </BrowserRouter>
