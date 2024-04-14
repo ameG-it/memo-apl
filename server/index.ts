@@ -1,29 +1,34 @@
-import express = require("express");
+import "dotenv/config"; // eslint-disable-line import/no-extraneous-dependencies
+import express from "express";
+import cors from "cors"; // eslint-disable-line import/no-extraneous-dependencies
 import mongoose from "mongoose";
-import "dotenv/config";
+import userRouter from "./src/v1/routes/auth";
 
-//ユーザのモデルを作成
+// ユーザのモデルを作成
 
-const MONGODB_URL: string = process.env.MONGODB_URL;
+const { MONGODB_URL, CLIENT_ORIGIN, PORT } = process.env;
 const app = express();
-const PORT = 3000;
 
+// クライアントのオリジンを許可
+app.use(cors({ origin: CLIENT_ORIGIN })); // eslint-disable-line import/no-extraneous-dependencies
+
+// その他のルートとミドルウェアの設定
 app.use(express.json());
 
-app.use("/api/v1", require("./src/v1/routes/auth.ts"));
+app.use("/api/v1", userRouter);
 
-const dbConnect = async () => {
-  try {
-    await mongoose.connect(MONGODB_URL);
-  } catch (error) {
-    console.log(error);
-  }
-};
-dbConnect();
+try {
+  await mongoose.connect(MONGODB_URL);
+} catch (error) {
+  // デバック用
+  console.log(error); // eslint-disable-line import/no-extraneous-dependencies
+}
+
 app.get("/", (req, res) => {
   res.send("hello world!");
 });
 
 app.listen(PORT, () => {
-  console.log("サーバ起動");
+  // デバック用
+  console.log("サーバ起動"); // eslint-disable-line import/no-extraneous-dependencies
 });
