@@ -8,16 +8,20 @@ import {
 import { Box } from "@mui/system";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-import React from "react";
+import React, { useEffect } from "react";
 import { assets } from "../../assets/index";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  console.log("Sidebar");
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <Drawer
@@ -52,7 +56,7 @@ const Sidebar = () => {
             }}
           >
             <Typography variant="body2" fontWeight={700}>
-              メモ一覧
+              {user.username}
             </Typography>
             <IconButton onClick={logout}>
               <LogoutOutlinedIcon></LogoutOutlinedIcon>

@@ -7,7 +7,7 @@ type errors = {
   value: string;
 };
 
-interface IUser {
+export interface IUser {
   _id: string;
   username: string;
   password: string;
