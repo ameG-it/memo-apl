@@ -16,7 +16,6 @@ import { RootState } from "../../redux/store";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  console.log("Sidebar");
   const logout = () => {
     localStorage.removeItem("token");
     navigate("/login");
